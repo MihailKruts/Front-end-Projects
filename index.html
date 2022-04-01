@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <link rel="stylesheet" href="converter.css">
+
+    </head>
+    <body>
+        <div class="title">Case Converter</div>
+        <p>
+        <label for="text"></label>
+        <textarea id="text"></textarea>
+        <p>
+        <button id="upper-case" class="button">upper-case</button>
+        <button id="lower-case" class="button">lower-case</button>
+        <button id="proper-case" class="button">proper-case</button>
+        <button id="sentence-case" class="button">sentence-case</button>
+        <button id="save-text-file">Save Text File</button>>
+        <script>
+            let myText = document.getElementById("text");
+
+            document.getElementById("upper-case").addEventListener("click", function(){
+                myText.value = myText.value.toUpperCase();
+
+            });
+            document.getElementById("lower-case").addEventListener("click", function(){
+                myText.value = myText.value.toLowerCase();
+
+            });
+            document.getElementById("proper-case").addEventListener("click", function(){
+                let properCase = document.querySelector("textarea").value.toLowerCase();
+                let textArr = properCase.split(" ");
+
+                for (let i = 0; i < textArr.length; i++) {
+                    textArr[i] = textArr[i].charAt(0).toUpperCase() + textArr[i].substring(1);
+                }
+                properCase = textArr.join(' ');
+                myText.value = properCase;
+
+            });
+            document.getElementById("sentence-case").addEventListener("click", function(){
+                let sentenceCase = document.querySelector("textarea").value.toLowerCase();
+                let textArr = sentenceCase.split(". ");
+
+                for (let i = 0; i < textArr.length; i++) {
+                    textArr[i] = textArr[i].charAt(0).toUpperCase() + textArr[i].substring(1);
+                }
+                sentenceCase = textArr.join('. ')
+                myText.value = sentenceCase;
+
+
+
+            });
+            document.getElementById("save-text-file").addEventListener("click", function(){
+               download("text.txt", myText.value)
+
+            });
+            function download(filename, text) {
+                let element = document.createElement('a');
+                element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+                element.setAttribute('download', filename);
+
+                element.style.display = 'none';
+                document.body.appendChild(element);
+
+                element.click();
+
+                document.body.removeChild(element);
+            }
+
+        </script>
+    </body>
+</html>
